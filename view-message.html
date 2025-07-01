@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Future Message</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Your Future Message</h1>
+        <div id="messageDisplayArea">
+            <p id="noMessage" class="hidden">No message found for you in this browser, or the reveal date hasn't arrived yet.</p>
+            <div id="revealedMessage" class="hidden">
+                <p><strong>Your message from the past:</strong></p>
+                <div class="message-content" id="displayedContent"></div>
+                <p class="revealed-date">Originally scheduled for: <span id="scheduledDate"></span></p>
+            </div>
+        </div>
+        <p class="back-link"><a href="index.html">Go back to write a new message.</a></p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const noMessageDiv = document.getElementById('noMessage');
+            const revealedMessageDiv = document.getElementById('revealedMessage');
+            const displayedContent = document.getElementById('displayedContent');
+            const scheduledDateSpan = document.getElementById('scheduledDate');
+
+            const storedMessageJSON = localStorage.getItem('futureMessage');
+
+            if (storedMessageJSON) {
+                const storedMessage = JSON.parse(storedMessageJSON);
+                const deliveryDate = new Date(storedMessage.deliveryDate + 'T00:00:00'); // Add time to avoid timezone issues
+                const now = new Date();
+
+                if (now >= deliveryDate) {
+                    // Message is ready to be revealed!
+                    displayedContent.innerHTML = storedMessage.messageContent.replace(/\n/g, '<br>');
+                    scheduledDateSpan.textContent = new Date(storedMessage.deliveryDate).toLocaleDateString();
+                    revealedMessageDiv.classList.remove('hidden');
+                } else {
+                    // Not yet time
+                    noMessageDiv.textContent = `Your message is scheduled to be revealed on ${new Date(storedMessage.deliveryDate).toLocaleDateString()}. Check back then!`;
+                    noMessageDiv.classList.remove('hidden');
+                }
+            } else {
+                // No message stored at all
+                noMessageDiv.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
