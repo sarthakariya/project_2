@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write a Message to Your Future Self</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Write to Your Future Self</h1>
+        <p>Your message will be stored securely in this browser and revealed on your chosen date. <br> **You must use this same browser and device to open it later!**</p>
+
+        <form id="messageForm">
+            <label for="messageContent">Your Message:</label>
+            <textarea id="messageContent" rows="10" placeholder="Dear Future Sarthak, remember this goal or how you feel today..."></textarea>
+
+            <label for="deliveryDate">Reveal On:</label>
+            <input type="date" id="deliveryDate" required>
+
+            <button type="submit">Store Message Locally</button>
+        </form>
+
+        <div id="statusMessage" class="hidden"></div>
+        <p class="view-link">Already stored a message? <a href="view-message.html">View it here!</a></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
